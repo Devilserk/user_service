@@ -13,7 +13,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.faang.user_service.dto.subscription.UserDto;
 import school.faang.user_service.dto.subscription.UserFilterDto;
-import school.faang.user_service.entity.Country;
 import school.faang.user_service.entity.Skill;
 import school.faang.user_service.entity.User;
 import school.faang.user_service.entity.contact.Contact;
@@ -46,7 +45,6 @@ public class SubscriptionServiceTest {
                 new UserAboutFilter(),
                 new UserCityFilter(),
                 new UserContactFilter(),
-                new UserCountryFilter(),
                 new UserEmailFilter(),
                 new UserExperienceMinFilter(),
                 new UserExperienceMaxFilter(),
@@ -62,7 +60,6 @@ public class SubscriptionServiceTest {
                 Arguments.of(new UserAboutFilter(), UserFilterDto.builder().aboutPattern("about").build()),
                 Arguments.of(new UserEmailFilter(), UserFilterDto.builder().emailPattern("@").build()),
                 Arguments.of(new UserContactFilter(), UserFilterDto.builder().contactPattern("Adil").build()),
-                Arguments.of(new UserCountryFilter(), UserFilterDto.builder().countryPattern("Kaz").build()),
                 Arguments.of(new UserCityFilter(), UserFilterDto.builder().cityPattern("As").build()),
                 Arguments.of(new UserPhoneFilter(), UserFilterDto.builder().phonePattern("+7").build()),
                 Arguments.of(new UserSkillFilter(), UserFilterDto.builder().skillPattern("respon").build()),
@@ -160,16 +157,14 @@ public class SubscriptionServiceTest {
         Skill skill = Skill.builder().title("responsibility").build();
         user1.setContacts(List.of(contact));
         user1.setSkills(List.of(skill));
-        user1.setCountry(Country.builder().title("Kazakhstan").build());
 
         User user2 = User.builder().username("123").aboutMe("its me Mario").email("press F").city("chebypeli").phone("din don").experience(0).id(2).build();
         Contact contact2 = Contact.builder().contact("").build();
         Skill skill2 = Skill.builder().title("").build();
         user2.setContacts(List.of(contact2));
         user2.setSkills(List.of(skill2));
-        user2.setCountry(Country.builder().title("").build());
 
-        List<User> result = userFilter.apply(Stream.of(user1, user2), filter).collect(Collectors.toList());
+        List<User> result = userFilter.apply(Stream.of(user1, user2), filter).toList();
 
         assertAll(
                 () -> assertEquals(1, result.size()),

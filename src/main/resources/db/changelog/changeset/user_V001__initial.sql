@@ -1,8 +1,3 @@
-CREATE TABLE country (
-    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
-    title varchar(64) UNIQUE NOT NULL
-);
-
 CREATE TABLE users (
     id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
     username varchar(64) UNIQUE NOT NULL,
@@ -29,31 +24,6 @@ CREATE TABLE subscription (
 
     CONSTRAINT fk_follower_id FOREIGN KEY (follower_id) REFERENCES users (id),
     CONSTRAINT fk_followee_id FOREIGN KEY (followee_id) REFERENCES users (id)
-);
-
-CREATE TABLE mentorship (
-    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
-    mentor_id bigint NOT NULL,
-    mentee_id bigint NOT NULL,
-    created_at timestamptz DEFAULT current_timestamp,
-    updated_at timestamptz DEFAULT current_timestamp,
-
-    CONSTRAINT fk_mentor_id FOREIGN KEY (mentor_id) REFERENCES users (id),
-    CONSTRAINT fk_mentee_id FOREIGN KEY (mentee_id) REFERENCES users (id)
-);
-
-CREATE TABLE mentorship_request (
-    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
-    description varchar(4096) NOT NULL,
-    requester_id bigint NOT NULL,
-    receiver_id bigint NOT NULL,
-    status smallint DEFAULT 0 NOT NULL,
-    rejection_reason varchar(4096),
-    created_at timestamptz DEFAULT current_timestamp,
-    updated_at timestamptz DEFAULT current_timestamp,
-
-    CONSTRAINT fk_mentee_req_id FOREIGN KEY (requester_id) REFERENCES users (id),
-    CONSTRAINT fk_mentor_req_id FOREIGN KEY (receiver_id) REFERENCES users (id)
 );
 
 CREATE TABLE skill (
@@ -165,15 +135,6 @@ CREATE TABLE event (
     updated_at timestamptz DEFAULT current_timestamp,
 
     CONSTRAINT fk_event_owner_id FOREIGN KEY (user_id) REFERENCES users (id)
-);
-
-CREATE TABLE event_skill (
-    id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY UNIQUE,
-    event_id bigint NOT NULL,
-    skill_id bigint NOT NULL,
-
-    CONSTRAINT fk_event_skill_id FOREIGN KEY (event_id) REFERENCES event (id) ON DELETE CASCADE,
-    CONSTRAINT fk_skill_event_id FOREIGN KEY (skill_id) REFERENCES skill (id)
 );
 
 CREATE TABLE user_event (

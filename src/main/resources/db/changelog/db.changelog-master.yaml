@@ -8,14 +8,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/user_V004__goals.sql
   - include:
-      file: db/changelog/changeset/user_V005__insert_countries.sql
+      file: db/changelog/changeset/user_V005__insert_users.sql
   - include:
-      file: db/changelog/changeset/user_V006__insert_users.sql
+      file: db/changelog/changeset/user_V006__user_premium.sql
   - include:
-      file: db/changelog/changeset/user_V007__user_premium.sql
-  - include:
-      file: db/changelog/changeset/user_V008_user_banned.sql
-  - include:
-      file: db/changelog/changeset/user_V009_event_created_at_index.sql
-
-
+      file: db/changelog/changeset/user_V007_user_banned.sql

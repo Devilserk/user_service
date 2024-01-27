@@ -2,18 +2,21 @@ package school.faang.user_service.controller.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.constraints.NotEmpty;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import school.faang.user_service.dto.DeactivateResponseDto;
 import school.faang.user_service.dto.contact.ExtendedContactDto;
 import school.faang.user_service.dto.contact.TgContactDto;
 import school.faang.user_service.dto.subscription.UserDto;
 import school.faang.user_service.dto.subscription.UserFilterDto;
 import school.faang.user_service.service.UserService;
-
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,19 +47,6 @@ public class UserController {
     @GetMapping("/get-by-ids")
     List<UserDto> getUsersByIds(@NotEmpty(message = "ids cannot be empty") List<Long> ids) {
         return userService.getUsersByIds(ids);
-    }
-
-    @PostMapping("/send-a-file")
-    public void uploadFile(@RequestParam("file") MultipartFile file) {
-        if (file.isEmpty()) {
-            throw new RuntimeException("empty file");
-        }
-
-        try {
-            userService.registerAnArrayOfUser(file.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException("recording error, repeat request");
-        }
     }
 
     @PostMapping("/deactivation/{userId}")

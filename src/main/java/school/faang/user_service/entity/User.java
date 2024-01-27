@@ -49,10 +49,6 @@ public class User {
     @Column(name = "about_me", length = 4096)
     private String aboutMe;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
-    private Country country;
-
     @Column(name = "city", length = 64)
     private String city;
 

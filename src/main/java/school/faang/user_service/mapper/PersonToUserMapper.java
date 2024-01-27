@@ -14,8 +14,6 @@ public interface PersonToUserMapper {
     @Mapping(target = "username", expression = "java(personDto.getFirstName() + personDto.getLastName())")
     @Mapping(target = "email", source = "contactInfo.email")
     @Mapping(target = "phone", source = "contactInfo.phone")
-    @Mapping(target = "country.title", source = "contactInfo.address.country")
-    @Mapping(target = "city", source = "contactInfo.address.city")
     User toUser(UserPersonDto personDto);
 
     @Mapping(target = "contactInfo.email", source = "email")
